@@ -3,8 +3,14 @@
  */
 
 import java.util.*;
+import java.util.regex.*;
 
 public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T>  {
+
+    @Override
+    public Iterator<T> iterator() {
+        return tweets.iterator();
+    }
 
     private Set<T> tweets = new TreeSet<T>();
 
@@ -43,14 +49,39 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
     }
 
     public Map<String, Collection<T>> groupByLang() {
-        return null;
+        Map<String, Collection<T>> grouped = new HashMap<String, Collection<T>>();
+        for(T tweet : tweets) {
+            String curLang = tweet.getLang();
+            if(!grouped.containsKey(curLang)) {
+                grouped.put(curLang, new ArrayList<T>());
+            }
+            grouped.get(curLang).add(tweet);
+        }
+        return grouped;
     }
 
     public Map<String, Double> getTagCloud(String lang) {
+        for(T tweet : tweets) {
+            if(tweet.getLang().compareTo(lang) == 0) {
+                System.out.println(this.getWords(tweet.getContent()));
+                break;
+            }
+        }
         return null;
     }
 
-    public Iterator<T> iterator() {
-        return tweets.iterator();
+    private Collection<String> getWords(String tweet) {
+        final int minLength = 3;
+        List<String> words = new ArrayList<String>();
+        Pattern p = Pattern.compile("[\\w']+");
+        Matcher m = p.matcher(tweet);
+
+        while (m.find()) {
+            if(tweet.substring(m.start(), m.end()).length() > minLength) {
+                words.add(tweet.substring(m.start(), m.end()));
+            }
+        }
+        return words;
     }
+
 }

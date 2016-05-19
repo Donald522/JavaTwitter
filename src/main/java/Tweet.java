@@ -37,7 +37,8 @@ public class Tweet implements Serializable, Comparable {
             Tweet tmp = (Tweet) obj;
             if ((tmp.content.equals(this.content)) && (tmp.timestamp == this.timestamp)) {
                 return true;
-            } else {
+            }
+            else {
                 return false;
             }
         }
@@ -58,6 +59,18 @@ public class Tweet implements Serializable, Comparable {
         return content + "\n" + timestamp + "\n" + favoriteCount + "\n" + retweetCount + "\n" + lang;
     }
 
+    public int compareTo(Object object) {
+        if (object == null) {
+            throw new NullPointerException("Null parameter");
+        }
+        else if (!this.getClass().equals(object.getClass())) {
+            throw new ClassCastException("Possible ClassLoader issue.");
+        }
+        else {
+            Tweet tmp = (Tweet) object;
+            return this.content.compareTo(tmp.content);
+        }
+    }
     public Date getDate() {
         return timestamp;
     }
@@ -67,17 +80,7 @@ public class Tweet implements Serializable, Comparable {
     public int getRetweetCount() {
         return retweetCount;
     }
-
-    public int compareTo(Object object) {
-        if (object == null) {
-            throw new NullPointerException("Null parameter");
-        } else if (!this.getClass().equals(object.getClass())) {
-            throw new ClassCastException("Possible ClassLoader issue.");
-        } else {
-            Tweet tmp = (Tweet) object;
-            return this.content.compareTo(tmp.content);
-        }
-
-    }
+    public String getLang() {return lang;}
+    public String getContent() {return content;}
 }
 

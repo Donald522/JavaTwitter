@@ -26,16 +26,18 @@ public class Accessor {
 
         Twitter twitter = log();
 
-        int length = 100;
+        final int length = 100;
         long lastID = Long.MAX_VALUE;
         Query query = new Query(pattern);
         query.setSince(date);
         ArrayList<Tweet> tweets = new ArrayList<Tweet>();
         while (tweets.size() < querySize) {
-            if (querySize - tweets.size() > length)
+            if (querySize - tweets.size() > length) {
                 query.setCount(length);
-            else
+            }
+            else {
                 query.setCount(querySize - tweets.size());
+            }
             try {
                 QueryResult result = twitter.search(query);
                 for (Status s : result.getTweets()) {
@@ -53,7 +55,7 @@ public class Accessor {
                 System.out.println("Couldn't connect: " + te);
                 try {
                     System.out.println("Sleeping...");
-                    TimeUnit.MINUTES.sleep(3);
+                    TimeUnit.MINUTES.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

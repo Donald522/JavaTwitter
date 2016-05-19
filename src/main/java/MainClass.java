@@ -9,8 +9,8 @@ import java.util.List;
 public class MainClass {
     public static void main(String[] args) {
         System.out.println("start\n");
-        Collection<Tweet> tweetsCollection = Accessor.search("Real Madrid", "2016-04-18", 50);
-        TweetsContainerImpl<Tweet> tweets = new TweetsContainerImpl<Tweet>();
+        Collection<Tweet> tweetsCollection = Accessor.search("Real Madrid", "2016-04-18", 10);
+        TweetsContainer<Tweet> tweets = new TweetsContainerImpl<Tweet>();
         tweets.addAll(tweetsCollection);
         System.out.println("number of tweets = " + tweets.size());
 
@@ -28,5 +28,10 @@ public class MainClass {
         }
         System.out.println("=======Top Rated=======");
         System.out.println(tweets.getTopRated());
+
+        System.out.println("========Group by lang=======");
+        System.out.println(tweets.groupByLang());
+
+        tweets.getTagCloud("en");
     }
 }
