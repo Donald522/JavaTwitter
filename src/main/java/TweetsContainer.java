@@ -26,7 +26,7 @@ public interface TweetsContainer<T extends Tweet> extends Iterable<T>, Serializa
      * @param tweets collection containing elements to be added to this container
      * @return true if this container changed as a result of the call
      */
-    boolean addAll(Collection<? extends T> tweets);
+    boolean addAll(Collection<T> tweets);
 
     /**
      * Removes a single instance of the specified element from this
