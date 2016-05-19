@@ -6,7 +6,7 @@
 import java.io.Serializable;
 import java.util.Date;
 
-public class Tweet implements Serializable {
+public class Tweet implements Serializable, Comparable {
     private String content;
     private Date timestamp;
     private int favoriteCount;
@@ -66,6 +66,18 @@ public class Tweet implements Serializable {
     }
     public int getRetweetCount() {
         return retweetCount;
+    }
+
+    public int compareTo(Object object) {
+        if (object == null) {
+            throw new NullPointerException("Null parameter");
+        } else if (!this.getClass().equals(object.getClass())) {
+            throw new ClassCastException("Possible ClassLoader issue.");
+        } else {
+            Tweet tmp = (Tweet) object;
+            return this.content.compareTo(tmp.content);
+        }
+
     }
 }
 

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T>  {
 
-    private List<T> tweets = new ArrayList<T>();
+    private Set<T> tweets = new TreeSet<T>();
 
     public int size() {
         return tweets.size();
@@ -16,7 +16,7 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
         return tweets.add(tweet);
     }
 
-    public boolean addAll(Collection<T> tweetsSet) {
+    public boolean addAll(Collection<? extends T> tweetsSet) {
         return tweets.addAll(tweetsSet);
     }
 
@@ -29,27 +29,17 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
     }
 
     public Tweet getOldest() {
-        T oldest = tweets.get(0);
-        for (T tweet : tweets) {
-            if(tweet.getDate().before(oldest.getDate())) {
-                oldest = tweet;
-            }
-        }
-        return oldest;
+        return Collections.min(tweets, new SortedByDate());
     }
 
     public Tweet getTopRated() {
-        T maxRated = tweets.get(0);
-        for(T tweet : tweets) {
-            if(tweet.getFavoriteCount() > maxRated.getFavoriteCount()) {
-                maxRated = tweet;
-            }
-        }
-        return maxRated;
+        return Collections.max(tweets, new SortedByLikes());
     }
 
     public void sort(Comparator<T> comparator) {
-        Collections.sort(tweets, comparator);
+        SortedSet<T> tmp = new TreeSet<T>(comparator);
+        tmp.addAll(tweets);
+        tweets = tmp;
     }
 
     public Map<String, Collection<T>> groupByLang() {

@@ -7,6 +7,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 public class Accessor {
 
@@ -37,7 +38,7 @@ public class Accessor {
                 query.setCount(querySize - tweets.size());
             try {
                 QueryResult result = twitter.search(query);
-                for(Status s : result.getTweets()) {
+                for (Status s : result.getTweets()) {
                     if (s.getId() < lastID) lastID = s.getId();
                     Tweet tweet = new Tweet(
                             s.getText(),
@@ -50,6 +51,12 @@ public class Accessor {
                 }
             } catch (TwitterException te) {
                 System.out.println("Couldn't connect: " + te);
+                try {
+                    System.out.println("Sleeping...");
+                    TimeUnit.MINUTES.sleep(3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             query.setMaxId(lastID - 1);
         }
