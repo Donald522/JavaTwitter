@@ -8,12 +8,16 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
 
     private List<T> tweets = new ArrayList<T>();
 
+    public int size() {
+        return tweets.size();
+    }
+
     public boolean add(T tweet) {
         return tweets.add(tweet);
     }
 
-    public boolean addAll(Collection<T> tweets) {
-        return tweets.addAll(tweets);
+    public boolean addAll(Collection<T> tweetsSet) {
+        return tweets.addAll(tweetsSet);
     }
 
     public boolean remove(T tweet) {
@@ -21,7 +25,7 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
     }
 
     public void clear() {
-        tweets.clear();;
+        tweets.clear();
     }
 
     public Tweet getOldest() {
@@ -57,6 +61,6 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
     }
 
     public Iterator<T> iterator() {
-        return null;
+        return tweets.iterator();
     }
 }

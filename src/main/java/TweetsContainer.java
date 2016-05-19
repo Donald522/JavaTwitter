@@ -12,6 +12,7 @@ import java.util.Map;
 
 public interface TweetsContainer<T extends Tweet> extends Iterable<T>, Serializable {
 
+    int size();
     /**
      * Adds an element to this container
      *
