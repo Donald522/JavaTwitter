@@ -61,13 +61,25 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
     }
 
     public Map<String, Double> getTagCloud(String lang) {
+        Map<String, Double> tagCloud = new HashMap<String, Double>();
+        Collection<String> words;
+        int numberOfWords = 0;
         for(T tweet : tweets) {
             if(tweet.getLang().compareTo(lang) == 0) {
-                System.out.println(this.getWords(tweet.getContent()));
-                break;
+                words = this.getWords(tweet.getContent());
+                for (String word : words) {
+                    if(!tagCloud.containsKey(word)) {
+                        tagCloud.put(word, (double) 0);
+                    }
+                    tagCloud.put(word, tagCloud.get(word) + 1);
+                }
+                numberOfWords += words.size();
             }
         }
-        return null;
+        for (String word : tagCloud.keySet()) {
+            tagCloud.put(word, tagCloud.get(word) / numberOfWords);
+        }
+        return tagCloud;
     }
 
     private Collection<String> getWords(String tweet) {
@@ -75,7 +87,6 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
         List<String> words = new ArrayList<String>();
         Pattern p = Pattern.compile("[\\w']+");
         Matcher m = p.matcher(tweet);
-
         while (m.find()) {
             if(tweet.substring(m.start(), m.end()).length() > minLength) {
                 words.add(tweet.substring(m.start(), m.end()));
