@@ -19,14 +19,23 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
     }
 
     public boolean add(T tweet) {
+        if(tweet == null) {
+            return false;
+        }
         return tweets.add(tweet);
     }
 
     public boolean addAll(Collection<? extends T> tweetsSet) {
+        if(tweetsSet == null) {
+            return false;
+        }
         return tweets.addAll(tweetsSet);
     }
 
     public boolean remove(T tweet) {
+        if(tweet == null) {
+            return false;
+        }
         return tweets.remove(tweet);
     }
 
@@ -61,12 +70,18 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
     }
 
     public Map<String, Double> getTagCloud(String lang) {
+        if(lang == null) {
+            return null;
+        }
         Map<String, Double> tagCloud = new HashMap<String, Double>();
         Collection<String> words;
         int numberOfWords = 0;
         for(T tweet : tweets) {
             if(tweet.getLang().compareTo(lang) == 0) {
                 words = this.getWords(tweet.getContent());
+                if(words == null) {
+                    return null;
+                }
                 for (String word : words) {
                     if(!tagCloud.containsKey(word)) {
                         tagCloud.put(word, (double) 0);
@@ -83,6 +98,9 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
     }
 
     private Collection<String> getWords(String tweet) {
+        if(tweet == null) {
+            return null;
+        }
         final int minLength = 3;
         List<String> words = new ArrayList<String>();
         Pattern p = Pattern.compile("[\\w']+");
@@ -94,5 +112,4 @@ public class TweetsContainerImpl<T extends Tweet> implements TweetsContainer<T> 
         }
         return words;
     }
-
 }

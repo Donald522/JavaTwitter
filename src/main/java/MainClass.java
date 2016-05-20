@@ -5,9 +5,11 @@ import java.util.*;
  */
 public class MainClass {
     public static void main(String[] args) {
+
         System.out.println("start\n");
         Collection<Tweet> tweetsCollection = Accessor.search("Real Madrid", "2016-04-18", 5);
         TweetsContainer<Tweet> tweets = new TweetsContainerImpl<Tweet>();
+
         tweets.addAll(tweetsCollection);
         System.out.println("number of tweets = " + tweets.size());
 
@@ -30,5 +32,6 @@ public class MainClass {
         System.out.println(tweets.groupByLang());
 
         System.out.println(tweets.getTagCloud("en"));
+
     }
 }
