@@ -31,12 +31,13 @@ public class MainClass extends Application {
     @Override
     public void start(Stage stage) {
 
-        Map<String, List<Integer>> data = getChartData(50);
+        Map<String, List<Integer>> data = getChartData(10);
 
         final NumberAxis xAxis = new NumberAxis();
         final CategoryAxis yAxis = new CategoryAxis();
         final BarChart<Number, String> bc = new BarChart<Number, String>(xAxis, yAxis);
         bc.setTitle("Summary");
+        bc.setAnimated(false);
         xAxis.setLabel("Tweets' number");
         xAxis.setTickLabelRotation(90);
         yAxis.setLabel("Language");
@@ -56,12 +57,12 @@ public class MainClass extends Application {
         Scene scene = new Scene(bc, 800, 600);
         bc.getData().addAll(series1, series2);
         stage.setScene(scene);
-        stage.show();
+    //    stage.show();
 
         WritableImage snapShot = scene.snapshot(null);
 
         try {
-            ImageIO.write(SwingFXUtils.fromFXImage(snapShot, null), "png", new File("test.png"));
+            ImageIO.write(SwingFXUtils.fromFXImage(snapShot, null), "pdf", new File("test.pdf"));
         } catch (IOException e) {
             e.printStackTrace();
         }
