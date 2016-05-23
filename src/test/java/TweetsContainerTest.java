@@ -25,6 +25,7 @@ public class TweetsContainerTest<T extends Tweet> {
     @Test()
     public void methodWithOneTweetTest() throws Exception {
         Tweet tweet = new Tweet("Real is the best", new Date(1111111111), 10, 20, "en");
+        assertEquals(false, tweets.remove((T) tweet));
         assertTrue(tweets.add((T) tweet));
         assertEquals(1, tweets.size());
         assertEquals(10, tweets.getTopRated().getFavoriteCount());

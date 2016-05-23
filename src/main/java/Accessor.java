@@ -55,7 +55,7 @@ public class Accessor {
                 System.out.println("Couldn't connect: " + te);
                 try {
                     System.out.println("Sleeping...");
-                    TimeUnit.MINUTES.sleep(5);
+                    TimeUnit.MINUTES.sleep(15);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
