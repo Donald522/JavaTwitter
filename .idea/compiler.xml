@@ -22,11 +22,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="SphereJavaHw" />
+        <module name="java-hw-tolkachev" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SphereJavaHw" target="1.6" />
+      <module name="java-hw-tolkachev" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

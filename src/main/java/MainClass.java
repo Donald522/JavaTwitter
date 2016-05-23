@@ -5,13 +5,9 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -19,9 +15,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import javax.imageio.ImageIO;
+import java.math.*;
+
 
 public class MainClass extends Application {
     public static void main(String[] args) {
@@ -31,14 +27,14 @@ public class MainClass extends Application {
     @Override
     public void start(Stage stage) {
 
-        Map<String, List<Integer>> data = getChartData(10);
-
+        Map<String, List<Double>> data = getChartData(5000);
+    //    System.out.println(data);
         final NumberAxis xAxis = new NumberAxis();
         final CategoryAxis yAxis = new CategoryAxis();
         final BarChart<Number, String> bc = new BarChart<Number, String>(xAxis, yAxis);
         bc.setTitle("Summary");
         bc.setAnimated(false);
-        xAxis.setLabel("Tweets' number");
+        xAxis.setLabel("Log(Tweets' number)");
         xAxis.setTickLabelRotation(90);
         yAxis.setLabel("Language");
 
@@ -62,16 +58,16 @@ public class MainClass extends Application {
         WritableImage snapShot = scene.snapshot(null);
 
         try {
-            ImageIO.write(SwingFXUtils.fromFXImage(snapShot, null), "pdf", new File("test.pdf"));
+            ImageIO.write(SwingFXUtils.fromFXImage(snapShot, null), "png", new File("diagram.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        Platform.exit();
     }
 
-    private Map<String, List<Integer>> getChartData(int sampleSize) {
+    private Map<String, List<Double>> getChartData(int sampleSize) {
 
-        Map<String, List<Integer>> result = new HashMap<String, List<Integer>>();
+        Map<String, List<Double>> result = new HashMap<String, List<Double>>();
 
         /* Real Madrid tweets */
         Collection<Tweet> tweetsRealCollection = Accessor.search("Real Madrid", "2016-04-23", sampleSize);
@@ -91,20 +87,20 @@ public class MainClass extends Application {
 
         for(String lang : groupedReal.keySet()) {
             if(!result.containsKey(lang)) {
-                result.put(lang, new ArrayList<Integer>());
-                result.get(lang).add(0);
-                result.get(lang).add(0);
+                result.put(lang, new ArrayList<Double>());
+                result.get(lang).add((double) 0);
+                result.get(lang).add((double) 0);
             }
-            result.get(lang).set(0, result.get(lang).get(0) + groupedReal.get(lang).size());
+            result.get(lang).set(0, (result.get(lang).get(0) + Math.log(groupedReal.get(lang).size()+1)));
         }
 
         for(String lang : groupedAtletico.keySet()) {
             if(!result.containsKey(lang)) {
-                result.put(lang, new ArrayList<Integer>());
-                result.get(lang).add(0);
-                result.get(lang).add(0);
+                result.put(lang, new ArrayList<Double>());
+                result.get(lang).add((double) 0);
+                result.get(lang).add((double) 0);
             }
-            result.get(lang).set(1, result.get(lang).get(1) + groupedAtletico.get(lang).size());
+            result.get(lang).set(1, (result.get(lang).get(1) + Math.log(groupedAtletico.get(lang).size()+1)));
         }
 
         return result;
