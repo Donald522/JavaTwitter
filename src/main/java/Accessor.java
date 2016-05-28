@@ -14,10 +14,10 @@ public class Accessor {
     private static Twitter log() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
-                .setOAuthConsumerKey("PTNcJUZmk5w75LEQsSraCuKo1")
-                .setOAuthConsumerSecret("1NoB3ANMKEDrlabb5C1b3oBdminESRsTrgfKR6dAjhOHPx4oyo")
-                .setOAuthAccessToken("703693954907299840-hhW6FX4nmKnECqsLT4CP7v9EG6rE8FA")
-                .setOAuthAccessTokenSecret("sIQ9JTCnCxfUvBd2pwFvpTbERExLHkmJPGcch4hiPv7Km");
+                .setOAuthConsumerKey("***")
+                .setOAuthConsumerSecret("***")
+                .setOAuthAccessToken("***")
+                .setOAuthAccessTokenSecret("***");
 
         return new TwitterFactory(cb.build()).getInstance();
     }
